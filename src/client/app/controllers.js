@@ -10,7 +10,8 @@
   function weatherCtrl (getWeatherService) {
     var vm = this;
 
-    getGeoLocation();
+    // getGeoLocation();
+    geoLocation();
 
     vm.getWeatherByCity = function () {
       getWeatherService.getWeatherByCity(vm.city)
@@ -54,6 +55,12 @@
         return err;
       });
     };
+
+    function geoLocation () {
+      if (navigator.geolocation) {
+        console.log(navigator.geolocation.getCurrentPosition());
+      }
+    }
 
   };
 
