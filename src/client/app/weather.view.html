@@ -12,6 +12,12 @@
   </div>
 </div>
 
+<div class="row" ng-show="!vm.city">
+  <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+  <h3>Loading the weather for you city . . .</h3>
+  <span class="sr-only">Loading...</span>
+</div>
+
 <div class="row container">
   <div class="col-md-4" ng-repeat="(key, value) in vm.weather | groupBy: 'day'">
     <div class="panel panel-primary">
@@ -30,7 +36,7 @@
         </div>
         <div class="col-md-6">
           <div ng-repeat="weather in value">
-            <img ng-if="$index === vm.findMid(value.length)" ng-src="http://openweathermap.org/img/w/{{weather.weather[0].icon}}.png" height="60">
+            <img ng-if="$index === vm.findMid(value.length)" ng-src="https://openweathermap.org/img/w/{{weather.weather[0].icon}}.png" height="60">
           </div>
         </div>
         <table class="table">
@@ -42,7 +48,7 @@
           <tr ng-repeat="weather in value">
             <td nowrap align="right">{{weather.dt*1000 | date:'h a'}}</td>
             <td align="center">{{weather.main.temp | number:0}}&deg;</td>
-            <td align="center"><img ng-src="http://openweathermap.org/img/w/{{weather.weather[0].icon}}.png" height="40"></td>
+            <td align="center"><img ng-src="https://openweathermap.org/img/w/{{weather.weather[0].icon}}.png" height="40"></td>
             <td nowrap>{{weather.wind.speed | number:0}} mph</td>
             <td align="center">{{weather.main.humidity}}%</td>
           </tr>
