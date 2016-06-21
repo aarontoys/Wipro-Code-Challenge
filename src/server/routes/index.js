@@ -58,7 +58,10 @@ router.get('/geo', function (req, res, next) {
     qs: {
       key: geokey
     },
-    json: true
+    json: true,
+    headers: {
+        'host': 'www.googleapis.com'
+    }
   };
 
   rp(options)
