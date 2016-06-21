@@ -65,7 +65,7 @@
     function geoSuccess (pos) {
       var lat = pos.coords.latitude;
       var lon = pos.coords.longitude;
-        getWeather(lat, lon)
+      getWeather(lat, lon)
     }
 
   };
