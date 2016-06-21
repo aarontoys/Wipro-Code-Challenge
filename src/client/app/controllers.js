@@ -58,12 +58,14 @@
 
     function geoLocation () {
       if (navigator.geolocation) {
-        console.log(navigator.geolocation.getCurrentPosition(geoSuccess));
+        navigator.geolocation.getCurrentPosition(geoSuccess);
       }
     }
 
     function geoSuccess (pos) {
-      console.log(pos);
+      var lat = pos.coords.latitude;
+      var lon = pos.coords.longitude;
+        getWeather(lat, lon)
     }
 
   };
