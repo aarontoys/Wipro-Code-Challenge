@@ -58,8 +58,12 @@
 
     function geoLocation () {
       if (navigator.geolocation) {
-        console.log(navigator.geolocation.getCurrentPosition());
+        console.log(navigator.geolocation.getCurrentPosition(geoSuccess));
       }
+    }
+
+    function geoSuccess (pos) {
+      console.log(pos);
     }
 
   };
