@@ -11,6 +11,6 @@
       templateUrl: 'app/weather.view.html',
       controller: 'weatherCtrl',
       controllerAs: 'vm'
-    }
-  }
+    };
+  };
 })();

@@ -1,2 +1,53 @@
-<p>test weather view</p>
-<p>{{vm.test}}</p>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <form ng-submit="vm.getWeatherByCity()">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Enter you city . . ."  ng-model="vm.city">
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row container">
+  <div class="col-md-4" ng-repeat="(key, value) in vm.weather | groupBy: 'day'">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title text-center">{{value[0].dt*1000 | date:'EEEE, MMM d, y'}}</h3>
+      </div>
+      <div class="panel-body">
+        <h4>Daily Summary:</h4>
+        <div class="col-md-6">
+          <div ng-repeat="weather in value | min:'main.temp'">
+            <p ng-if="weather.temp">Low: {{weather.temp | number:0 }}&deg;</p>
+          </div>     
+          <div ng-repeat="weather in value | max:'main.temp'">
+            <p ng-if="weather.temp">High: {{weather.temp | number:0 }}&deg;</p>
+          </div> 
+        </div>
+        <div class="col-md-6">
+          <div ng-repeat="weather in value">
+            <img ng-if="$index === vm.findMid(value.length)" ng-src="http://openweathermap.org/img/w/{{weather.weather[0].icon}}.png" height="60">
+          </div>
+        </div>
+        <table class="table">
+          <th>Time</th>
+          <th>Temp</th>
+          <th>Weather</th>
+          <th>Wind</th>
+          <th>Hum.</th>
+          <tr ng-repeat="weather in value">
+            <td nowrap align="right">{{weather.dt*1000 | date:'h a'}}</td>
+            <td align="center">{{weather.main.temp | number:0}}&deg;</td>
+            <td align="center"><img ng-src="http://openweathermap.org/img/w/{{weather.weather[0].icon}}.png" height="40"></td>
+            <td nowrap>{{weather.wind.speed | number:0}} mph</td>
+            <td align="center">{{weather.main.humidity}}%</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

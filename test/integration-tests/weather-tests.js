@@ -17,7 +17,7 @@ describe('weather route', function () {
       res.body.should.have.property('weather');
       res.body.status.should.equal('success');
       res.body.weather.should.be.a('object');
-      res.body.weather.city.name.should.equal('Aurora');
+      res.body.weather.city.name.should.equal('Denver');
       res.body.weather.list.should.be.a('array');
       res.body.weather.list.length.should.equal(40);
       done()

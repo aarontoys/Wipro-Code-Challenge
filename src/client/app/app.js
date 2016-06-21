@@ -2,6 +2,6 @@
   'use strict';
 
   angular
-    .module('weatherApp', []);
+    .module('weatherApp', ['angular.filter']);
 
 })();
