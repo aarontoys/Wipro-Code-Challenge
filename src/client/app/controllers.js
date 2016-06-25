@@ -10,8 +10,9 @@
   function weatherCtrl (getWeatherService) {
     var vm = this;
 
-    // getGeoLocation();
     geoLocation();
+
+    vm.scale = 'F';
 
     vm.getWeatherByCity = function () {
       getWeatherService.getWeatherByCity(vm.city)
@@ -44,7 +45,6 @@
     }
 
     function getGeoLocation () {
-      console.log('line30');
       getWeatherService.getGeoLocation()
       .then(function (result) {
         var lat = result.data.geo.location.lat;

@@ -11,34 +11,32 @@ router.get('/weather/:lat/:lon', function (req, res, next) {
       lat: req.params.lat,
       lon: req.params.lon,
       appid: apikey,
-      units: 'imperial'
     },
     json: true
   };
-
-  rp(options)
-  .then(function (result) {
-    res.status(200).json({
-      status: 'success',
-      weather: result
-    });
-  })
-  .catch(function (err) {
-    return next(err);
-  });
+  getGeoWeather(options, req, res, next);
 });
 
 router.get('/weather-by-city/:city', function (req, res, next) {
   var options = {
-    uri: 'http://api.openweathermap.org/data/2.5/forecast',
+    uri: 'http://api.openweathermap.org/data/2.5/find',
     qs: {
       q: req.params.city,
       appid: apikey,
-      units: 'imperial'
     },
     json: true
   };
 
+  getCityCoords(options, req, res, next)
+  .then(function (result) {
+    getGeoWeather(result, req, res, next)
+  })  
+  .catch(function (err) {
+    return err;
+  });
+});
+
+function getGeoWeather (options, req, res, next) {
   rp(options)
   .then(function (result) {
     res.status(200).json({
@@ -49,31 +47,27 @@ router.get('/weather-by-city/:city', function (req, res, next) {
   .catch(function (err) {
     return next(err);
   });
-})
+}
 
-router.get('/geo', function (req, res, next) {
-  var options = {
-    method: 'POST',
-    uri: 'https://www.googleapis.com/geolocation/v1/geolocate',
-    qs: {
-      key: geokey
-    },
-    json: true,
-    headers: {
-        'host': 'www.googleapis.com'
-    }
-  };
 
-  rp(options)
-  .then(function (result) {
-    res.status(200).json({
-      status: 'success',
-      geo: result
+function getCityCoords (options, req, res, next) {
+  return rp(options)
+    .then(function (result) {
+      var options = {
+        uri: 'http://api.openweathermap.org/data/2.5/forecast',
+        qs: {
+          lat: result.list[0].coord.lat,
+          lon: result.list[0].coord.lon,
+          appid: apikey,
+        },
+        json: true
+      };
+      return options;
     })
-  })
-  .catch(function (err) {
-    return next(err);
-  });
-})
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
 
 module.exports = router;
